@@ -15,7 +15,7 @@
 4. Demo bar → **Seed week** → board shows #218 in Packing, #219 in New.
 5. Demo bar → **Stale threshold 30 s**.
 6. Food on the counter under the webcam: open bag, burger, **fries**, drink.
-7. Phone with Photon/Telegram alerts on the table, sound on.
+7. Phone alerts are shown in the on-screen phone mockup (no real phone push in this build).
 8. Second browser tab already open on **Disputes**, third on **Insights**.
 
 ## The run
@@ -25,7 +25,7 @@
 | 2 | "Staff start packing. They press the same button they always press." | Karthik puts food into the bag → Ishan taps **Packing** on #219 | 📷 dot on #219 within ~2 s |
 | 3 | "That's it. That bag is now on the record." | Point at the 📷 on #219 (no order page in this build; the frame itself is shown in Disputes at step 8) | 📷 dot on #219 |
 | 4 | "Bag's ready." | Back, tap **Ready** on #219, then **don't hand it off** | Timer starts |
-| 5 | "But it's lunch rush and nobody picks it up…" | Wait ~30 s (talk through slide 3 meanwhile if needed) | Timer red, **phone buzzes**: "Bag #219 ready … not handed off" |
+| 5 | "But it's lunch rush and nobody picks it up…" | Wait ~30 s (talk through slide 3 meanwhile if needed) | Timer red, alert appears in the **on-screen phone mockup**: "Bag #219 ready … not handed off" |
 | 6 | "Driver grabs it." | Tap **Handed off** | Moves to Handed off |
 | 7 | "Two days later, DoorDash takes $3.99: 'missing fries'." | Demo bar → **Simulate charge**: #219, DoorDash, Fries, $3.99 | Charge appears in Disputes |
 | 8 | "One tap." | Disputes tab → open it → **Analyze** | **DISPUTE**, cites the packing frame, draft ready |
