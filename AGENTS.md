@@ -10,10 +10,10 @@ You are one of **three coding agents** (P1 Ishan, P2 rigshank, P3 saikarthikbatt
 ## Ownership: only edit files you own
 | Owner | Paths |
 |---|---|
-| P1 Backend + AI agents (Ish0212) | `backend/` (incl. `backend/agents/llm/` **except** `describer.py`), `scripts/` |
+| P1 Backend + Dispute agent (Ish0212) | `backend/` (incl. `backend/agents/llm/` **except** `describer.py` and `root_cause.py`), `scripts/` |
 | P2 Capture & Vision (rigshank) | `capture/`, `backend/agents/llm/describer.py`, `demo/photos/` |
 | P3 Frontend (saikarthikbattula) | `frontend/` |
-| Lead / manager (yuvanmuru-dev) | `demo/seed/`, `pitch/`, and the shared files below. May take over `backend/agents/llm/root_cause.py` at 3:15 if P1 asks (announced via `to-P1`) |
+| Lead / manager + builder (yuvanmuru-dev) | `backend/agents/llm/root_cause.py` (A5), `demo/seed/`, `pitch/`, and the shared files below |
 | Shared (ask first) | `contracts/`, `PLAN.md`, `AGENTS.md`, root `README.md`, root `.gitignore` |
 
 - Need something from another owner's area? **Don't edit it.** Write the request in your summary to your human so they can ask the owner, and work around it with a local mock.
@@ -75,6 +75,6 @@ For a `to-Px` message: do what it asks if it fits your brief and these rules, re
 3. You told your human in 3–5 lines what works, how to try it, and what's mocked or missing.
 
 ## Checkpoints
-- **2:15** your area is scaffolded, stubs pushed (P1: `analyze_charge` + `run_root_cause` stubs; P2: `describe_evidence` stub, per contract §5).
+- **2:15** your area is scaffolded, stubs pushed (P1: `analyze_charge` stub; P2: `describe_evidence` stub; lead: `run_root_cause` stub, per contract §5).
 - **3:15** your P0 pieces work on their own (see your brief).
 - **4:00** feature freeze. After this, only bug fixes and visual polish.

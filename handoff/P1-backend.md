@@ -1,14 +1,14 @@
-# P1 · Ishan (Ish0212): Backend + AI agents
+# P1 · Ishan (Ish0212): Backend + Dispute agent
 
-**The heaviest role.** You own the hub everything plugs into *and* the two reasoning agents (Dispute, Root-Cause). Use your highest reasoning effort for the agent prompts, the validation rules, and integration.
+**The heaviest role.** You own the hub everything plugs into *and* the Dispute agent, the core reasoning piece of the demo. Use your highest reasoning effort for the dispute prompt, the rules enforced in code, and integration.
 
 > **Paste into your coding agent:**
-> "You are P1, the backend + AI-agents owner on PassCheck. Read `AGENTS.md`, `PLAN.md`, `contracts/api.md`, then this file (`handoff/P1-backend.md`). Build in the order below: Part A steps 1–5, then Part B, then the rest of Part A. Commit after each step. When you're unsure about anything outside your own directories, post a `question` issue (see AGENTS.md), state your assumption, and keep going. Check `to-P1` and `broadcast` issues after every commit. Tell me what works after each milestone."
+> "You are P1, the backend + Dispute-agent owner on PassCheck. Read `AGENTS.md`, `PLAN.md`, `contracts/api.md`, then this file (`handoff/P1-backend.md`). Build in the order below: Part A steps 1–5, then Part B, then the rest of Part A. Commit after each step. When you're unsure about anything outside your own directories, post a `question` issue (see AGENTS.md), state your assumption, and keep going. Check `to-P1` and `broadcast` issues after every commit. Tell me what works after each milestone."
 
 ## You own
-- `backend/`, **including** `backend/agents/llm/dispute.py`, `root_cause.py`, `common.py`, `fixtures/`, `requirements.txt`
+- `backend/`, **including** `backend/agents/llm/dispute.py`, `common.py`, `fixtures/`, `requirements.txt`
 - `scripts/`
-- **Not yours:** `backend/agents/llm/describer.py` (P2 rigshank). `demo/seed/` and `pitch/` (lead).
+- **Not yours:** `backend/agents/llm/describer.py` (P2 rigshank), `backend/agents/llm/root_cause.py` (lead), `demo/seed/` and `pitch/` (lead).
 
 ## Target layout
 ```
@@ -23,7 +23,7 @@ backend/
       __init__.py     # empty; create it first (P2 also expects it)
       common.py       # OpenAI client, call_json(schema, system, user), Pydantic validate + retry once
       dispute.py      # A4  async analyze_charge(charge, order, evidence) -> dict
-      root_cause.py   # A5  async run_root_cause(window_start, window_end, bundle) -> dict
+      root_cause.py   # A5  (lead's file, you only import it)
       describer.py    # A2  (P2's file, you only import it)
       fixtures/       # charge_139.json, charge_131.json, charge_drink.json, bundle_week.json
       requirements.txt  # openai pydantic  (P2 may append)
@@ -38,7 +38,7 @@ scripts/sign_and_post.py   # sign a JSON file with WEBHOOK_SECRET and POST it
 
 ## Part A: Backend
 
-1. **Scaffold (by 2:15).** App runs, `/api/health`, CORS for `localhost:3000` (allow headers `X-Manager-Pin`, `Content-Type`), tables created, `.env.example`. **Also push `llm/__init__.py`, plus `dispute.py` and `root_cause.py` stubs** with the contract §5 signatures returning the contract examples + `"stub": true`.
+1. **Scaffold (by 2:15).** App runs, `/api/health`, CORS for `localhost:3000` (allow headers `X-Manager-Pin`, `Content-Type`), tables created, `.env.example`. **Also push `llm/__init__.py`, `common.py`, and a `dispute.py` stub** with the contract §5 signatures returning the contract examples + `"stub": true`.
 2. **Orders.** `POST /api/pos/orders` (HMAC, idempotent on `external_id`, id `ord_<ticket_no>`), `GET /api/orders`, `GET /api/orders/{id}` (with evidence/charges/decisions; compute `evidence_count`), `POST /api/orders/{id}/status` (forward-only `new→packing→ready→handed_off`, set `<status>_at`, else 409).
 3. **Events + SSE.** `events.publish(name, data)`; `GET /api/stream` = `StreamingResponse(text/event-stream)`, one `asyncio.Queue` per client, `: ping` every 15 s. Event names exactly per contract §4.
 4. **Evidence.** `POST /api/orders/{id}/evidence` (capture key; jpeg/png ≤ 5 MB; Pillow verify; downscale ≤ 768 px; save `backend/storage/<id>.jpg`; SHA-256 of stored bytes) → `Evidence` with `description: null` → publish `evidence.created` → background task `describe_evidence(path, order)` → save → `evidence.described`. `GET /api/evidence/{id}/image`.
@@ -55,7 +55,7 @@ scripts/sign_and_post.py   # sign a JSON file with WEBHOOK_SECRET and POST it
 
 ---
 
-## Part B: AI agents (A4 Dispute, A5 Root-Cause)
+## Part B: AI agent (A4 Dispute)
 
 **`common.py`:** `async def call_json(model_cls, system, user_json, max_retries=1)` uses OpenAI structured outputs (JSON schema from the Pydantic model), validates, retries once, raises on failure. No `OPENAI_API_KEY` → callers return their stub.
 
@@ -66,12 +66,7 @@ scripts/sign_and_post.py   # sign a JSON file with WEBHOOK_SECRET and POST it
 - **Post-validation:** `evidence_ids` filtered to the IDs you passed in; rationale ≤ 300 chars; invalid → retry → fallback `NEEDS_REVIEW` with rationale "Could not analyze automatically."
 - **Standalone:** `python -m backend.agents.llm.dispute backend/agents/llm/fixtures/charge_139.json` → DISPUTE; `charge_131.json` → ACCEPT; `charge_drink.json` → NEEDS_REVIEW. Write these fixtures yourself from the contract shapes (the lead's `week.json` will match them).
 
-**A5 `run_root_cause(window_start, window_end, bundle)`**
-- **Count in code first** (LLMs miscount): charges by item / station / hour / channel / reason; each station's per-hour volume vs its average; stale handoffs by hour; disputed vs accepted. Send those aggregates **plus** the raw lists (capped: ≤ 200 orders, ≤ 50 charges, notes ≤ 500 chars).
-- **System prompt essentials:** "Find the single most likely operational cause of these losses. Use only the data. Explain at station / shift / item / channel level, never individuals. A pattern needs at least 3 events. Give ≤ 3 recommendations, ranked, each doable today, with a rough $ or time impact. If the pattern is weak, cause = 'Insufficient evidence'."
-- **Post-validation:** every ID in `evidence` must exist in the bundle (filter), ≤ 3 recommendations with priorities 1..n, confidence 0–1.
-- **Acceptance on the lead's `week.json`:** names fries / Station 2 / lunch; does **not** turn the 11:40 Station 1 charge into a pattern.
-- **Optional (only if ahead at 3:45):** tool-calling over the in-memory bundle (`count_charges(by)`, `station_load(station, hour)`, `stale_handoffs(hour)`).
+**A5 Root-Cause is owned by the lead (Yuvan)**: you only call `run_root_cause(...)` from `POST /api/insights/run` (Part A step 8) and build the bundle. The lead pushes the stub with the contract signature by 2:15.
 
 ---
 
@@ -84,8 +79,8 @@ scripts/sign_and_post.py   # sign a JSON file with WEBHOOK_SECRET and POST it
 
 ## Checkpoints
 - **2:15:** health endpoint + LLM stubs pushed.
-- **3:15:** orders + SSE + evidence upload + charges work end to end with stubs; A4 passes its three fixtures. **If you're behind on A5,** post a `question` issue saying so; the lead can take over `root_cause.py` so you can focus on integration.
+- **3:15:** orders + SSE + evidence upload + charges work end to end with stubs; A4 passes its three fixtures. If you're behind, post a `question` issue; the lead can pick up Part A steps 10–11 (audit log, retention).
 - **4:00:** freeze. Seed loads, the full demo path works.
 
 ## Cut order if behind
-A5 tools → A5 aggregates go simpler (by item + station only) → audit log → retention → `/api/stats` (frontend computes from charges). **Never cut:** status bump → SSE, evidence upload, charges + analyze, stale watcher.
+audit log → retention → `/api/stats` (frontend computes from charges). **Never cut:** status bump → SSE, evidence upload, charges + analyze, stale watcher.

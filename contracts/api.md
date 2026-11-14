@@ -224,7 +224,7 @@ Format: `event: <name>\ndata: <json>\n\n`. Heartbeat comment `: ping` every 15 s
 
 ## 5. Python interfaces between backend and AI modules
 
-P1 owns the backend, calls all three, and owns `dispute.py` + `root_cause.py`; P2 owns `describer.py`. Both **must push stubs with these exact signatures in the first 15 minutes** (returning the example output) so P1 can integrate immediately. Each module must work without an API key (return a canned stub plus `"stub": true` in the dict) so nothing blocks.
+P1 owns the backend, calls all three, and owns `dispute.py`; P2 owns `describer.py`; the lead owns `root_cause.py`. All three **must push stubs with these exact signatures in the first 15 minutes** (returning the example output) so P1 can integrate immediately. Each module must work without an API key (return a canned stub plus `"stub": true` in the dict) so nothing blocks.
 
 ```python
 # backend/agents/llm/describer.py   (owner: P2)
@@ -236,7 +236,7 @@ async def analyze_charge(charge: dict, order: dict, evidence: list[dict]) -> dic
     """Return DisputeDecision fields except id/created_at/approved_*:
     recommendation, confidence, rationale, evidence_ids, draft_text."""
 
-# backend/agents/llm/root_cause.py  (owner: P1; lead may take over at 3:15)
+# backend/agents/llm/root_cause.py  (owner: lead)
 async def run_root_cause(window_start: str, window_end: str, bundle: dict) -> dict:
     """bundle = {"orders": [Order], "charges": [ErrorCharge], "decisions": [DisputeDecision],
                  "alerts": [Alert], "evidence": [Evidence]}  (all within the window).
