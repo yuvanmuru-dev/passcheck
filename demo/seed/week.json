@@ -3547,11 +3547,11 @@
           "modifiers": []
         }
       ],
-      "created_at": "2026-11-14T22:20:00Z",
+      "created_at": "2026-11-14T20:30:00Z",
       "status": "handed_off",
-      "packing_at": "2026-11-14T22:24:00Z",
-      "ready_at": "2026-11-14T22:25:21Z",
-      "handed_off_at": "2026-11-14T22:27:58Z"
+      "packing_at": "2026-11-14T20:34:00Z",
+      "ready_at": "2026-11-14T20:35:21Z",
+      "handed_off_at": "2026-11-14T20:37:58Z"
     },
     {
       "external_id": "toast_f22bd5",
@@ -3578,11 +3578,11 @@
           "modifiers": []
         }
       ],
-      "created_at": "2026-11-14T22:26:00Z",
+      "created_at": "2026-11-14T20:36:00Z",
       "status": "handed_off",
-      "packing_at": "2026-11-14T22:32:21Z",
-      "ready_at": "2026-11-14T22:32:51Z",
-      "handed_off_at": "2026-11-14T22:33:23Z"
+      "packing_at": "2026-11-14T20:42:21Z",
+      "ready_at": "2026-11-14T20:42:51Z",
+      "handed_off_at": "2026-11-14T20:43:23Z"
     },
     {
       "external_id": "toast_d1f543",
@@ -3611,9 +3611,9 @@
           "modifiers": []
         }
       ],
-      "created_at": "2026-11-14T22:32:00Z",
+      "created_at": "2026-11-14T20:42:00Z",
       "status": "packing",
-      "packing_at": "2026-11-14T22:36:17Z",
+      "packing_at": "2026-11-14T20:46:17Z",
       "ready_at": null,
       "handed_off_at": null
     },
@@ -3642,7 +3642,7 @@
           "modifiers": []
         }
       ],
-      "created_at": "2026-11-14T22:38:00Z",
+      "created_at": "2026-11-14T20:48:00Z",
       "status": "new",
       "packing_at": null,
       "ready_at": null,
@@ -5837,7 +5837,7 @@
     {
       "ticket_no": 217,
       "kind": "packing",
-      "captured_at": "2026-11-14T22:32:22Z",
+      "captured_at": "2026-11-14T20:42:22Z",
       "image": "demo/photos/fries_in_bag.jpg",
       "description": {
         "visible_items": [
@@ -5862,7 +5862,7 @@
     {
       "ticket_no": 217,
       "kind": "handed_off",
-      "captured_at": "2026-11-14T22:33:24Z",
+      "captured_at": "2026-11-14T20:43:24Z",
       "image": "demo/photos/sealed_bag.jpg",
       "description": {
         "visible_items": [],

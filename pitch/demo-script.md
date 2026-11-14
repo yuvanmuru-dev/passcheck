@@ -10,7 +10,7 @@
 
 ## Setup (by 4:30, on the demo laptop)
 1. `backend/.env` has the OpenAI key and `DEMO_MODE=true`.
-2. Start: `uvicorn backend.main:app --port 8000` · `python -m capture.main` · `cd frontend && npm run dev`.
+2. `cp capture/.env.example capture/.env` (once; holds the capture key). Start: `uvicorn backend.main:app --port 8000` · `CAMERA_INDEX=<iPhone #> python -m capture.main` (from **Terminal.app**, so macOS grants camera access) · `cd frontend && npm run dev`.
 3. Open `http://localhost:3000/?demo=1`, enter manager PIN.
 4. Demo bar → **Seed week** → board shows #218 in Packing, #219 in New.
 5. Demo bar → **Stale threshold 30 s**.
@@ -31,7 +31,7 @@
 | 8 | "One tap." | Disputes tab → open it → **Analyze** | **DISPUTE**, cites the packing frame, draft ready |
 | 9 | "Manager approves. Done in 30 seconds instead of digging through footage." | **Approve dispute** | Status disputed |
 | 10 | "And it's honest when we really messed up." | Open seeded **#131** charge → **Analyze** | **ACCEPT**: frame shows no fries |
-| 11 | "But *why* do fries keep going missing?" | Insights tab → **Why?** | Cause card: fries · Station 2 · 12–1 PM, Station 2 at ~4.4× volume, 3 fixes |
+| 11 | "But *why* do fries keep going missing?" | Insights tab → **Why?** | Cause card: fries · Station 2 · 12–1 PM, Station 2 at N× its usual volume (read the number off the screen; it depends on the time window), 3 fixes |
 | 12 | "That's PassCheck." | Back to slides 4–5 | |
 
 ## Backups (decide fast, don't debug on stage)

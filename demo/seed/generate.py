@@ -59,7 +59,7 @@ def day_slots(day: int) -> list[datetime]:
     if day < 14:
         slots += [ct(day, 17, 40, 0) + timedelta(minutes=40 * i + RNG.randint(0, 15)) for i in range(4)]
     else:
-        slots += [ct(14, 16, 20 + 6 * i, 0) for i in range(4)]
+        slots += [ct(14, 14, 30 + 6 * i, 0) for i in range(4)]
     return slots
 
 
