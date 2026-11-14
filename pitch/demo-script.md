@@ -23,7 +23,7 @@
 |---|---|---|---|
 | 1 | "This is a restaurant's counter. Order #219 just came in from DoorDash." | Board visible | #219 in **New** |
 | 2 | "Staff start packing. They press the same button they always press." | Karthik puts food into the bag → Ishan taps **Packing** on #219 | 📷 dot on #219 within ~2 s |
-| 3 | "That's it. That bag is now on the record." | Click #219 | Timeline shows the live frame + "visible: …Fries…" description |
+| 3 | "That's it. That bag is now on the record." | Point at the 📷 on #219 (no order page in this build; the frame itself is shown in Disputes at step 8) | 📷 dot on #219 |
 | 4 | "Bag's ready." | Back, tap **Ready** on #219, then **don't hand it off** | Timer starts |
 | 5 | "But it's lunch rush and nobody picks it up…" | Wait ~30 s (talk through slide 3 meanwhile if needed) | Timer red, **phone buzzes**: "Bag #219 ready … not handed off" |
 | 6 | "Driver grabs it." | Tap **Handed off** | Moves to Handed off |
@@ -37,7 +37,7 @@
 ## Backups (decide fast, don't debug on stage)
 | If… | Then… |
 |---|---|
-| Webcam / capture doesn't snap at step 2 | Karthik runs `python -m capture.main --once ord_219 packing --file demo/photos/fries_in_bag.jpg`). Keep talking. |
+| Webcam / capture doesn't snap at step 2 | Karthik runs `python -m capture.main --once ord_219 packing --file demo/photos/fries_in_bag.jpg`. Keep talking. |
 | Step 8 says NEEDS_REVIEW on #219 (live frame unclear) | "Live camera angle was off, so it refused to guess. That's the point." Then open seeded **#139** → Analyze → **DISPUTE**. |
 | Phone doesn't buzz | Point at the phone mockup on screen: "Same alert goes to the manager's phone." |
 | OpenAI slow or down | Dispute and Root-Cause both have no-key fallbacks; restart the backend without the key if needed. |
