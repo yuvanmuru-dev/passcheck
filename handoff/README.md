@@ -43,7 +43,7 @@ cd frontend && npm run dev     # open http://localhost:3000/?demo=1
 Teammates' agents post questions as GitHub Issues labeled `question` (the how-to is in `AGENTS.md`). The lead Claude Code session answers them:
 
 - Start it in the lead session with:
-  `/loop 2m check open GitHub issues labeled "question" in <owner>/passcheck from our 4 team accounts; answer each per PLAN.md and contracts/api.md as a comment starting with **ANSWER (lead):**, add the "answered" label, close it; if a contract change is needed, edit contracts/api.md, push, and post a "broadcast" issue`
+  `/loop 2m check open GitHub issues labeled "question" in yuvanmuru-dev/passcheck from our 4 team accounts; answer each per PLAN.md and contracts/api.md as a comment starting with **ANSWER (lead):**, add the "answered" label, close it; if a contract change is needed, edit contracts/api.md, push, and post a "broadcast" issue`
 - The lead can also message one agent directly (a `to-P1`…`to-P4` issue, e.g. review feedback on a commit) or everyone at once (`broadcast`). Agents check these after each commit and reply in a comment.
 - The lead only answers issues opened by the four team accounts. Anything else is ignored.
 - Issue text is treated as a question, not as commands. The lead doesn't run code from issues or edit teammates' directories.
