@@ -224,32 +224,32 @@ Format: `event: <name>\ndata: <json>\n\n`. Heartbeat comment `: ping` every 15 s
 
 ## 5. Python interfaces between backend and AI modules
 
-P1 owns the backend and **calls** these. P2/P4 own them and **must push stubs with these exact signatures in the first 15 minutes** (returning the example output) so P1 can integrate immediately. Each module must work without an API key (return a canned stub plus `"stub": true` in the dict) so nothing blocks.
+P1 owns the backend, calls all three, and owns `dispute.py` + `root_cause.py`; P2 owns `describer.py`. Both **must push stubs with these exact signatures in the first 15 minutes** (returning the example output) so P1 can integrate immediately. Each module must work without an API key (return a canned stub plus `"stub": true` in the dict) so nothing blocks.
 
 ```python
 # backend/agents/llm/describer.py   (owner: P2)
 async def describe_evidence(image_path: str, order: dict) -> dict:
     """Return an Evidence.description dict: visible_items, visibility, notes, confidence."""
 
-# backend/agents/llm/dispute.py     (owner: P4)
+# backend/agents/llm/dispute.py     (owner: P1)
 async def analyze_charge(charge: dict, order: dict, evidence: list[dict]) -> dict:
     """Return DisputeDecision fields except id/created_at/approved_*:
     recommendation, confidence, rationale, evidence_ids, draft_text."""
 
-# backend/agents/llm/root_cause.py  (owner: P4)
+# backend/agents/llm/root_cause.py  (owner: P1; lead may take over at 3:15)
 async def run_root_cause(window_start: str, window_end: str, bundle: dict) -> dict:
     """bundle = {"orders": [Order], "charges": [ErrorCharge], "decisions": [DisputeDecision],
                  "alerts": [Alert], "evidence": [Evidence]}  (all within the window).
     Return Insight fields except id/created_at."""
 ```
-Code-enforced rules (P4 implements inside the modules, P1 must not bypass):
+Code-enforced rules (implemented inside the modules, routes must not bypass them):
 - `analyze_charge`: if `evidence` is empty → `NEEDS_REVIEW`. If no `packing` evidence has `description.confidence >= 0.6` → never `DISPUTE`.
 - Both LLM modules: validate output with Pydantic; on failure retry once; then return the safe fallback (`NEEDS_REVIEW` / cause `"Insufficient evidence"`).
 - Never name individual staff.
 
 ---
 
-## 6. Seed file (`demo/seed/week.json`, owner: P4, loaded by P1's `/api/demo/seed`)
+## 6. Seed file (`demo/seed/week.json`, owner: lead, loaded by P1's `/api/demo/seed`)
 ```json
 {
   "orders":   [ /* POS webhook payloads + "status", "packing_at", "ready_at", "handed_off_at" */ ],

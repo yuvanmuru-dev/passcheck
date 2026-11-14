@@ -32,7 +32,7 @@ capture/
   .env.example
   frames/          # local copies (gitignored)
 backend/agents/llm/
-  __init__.py      # create if missing (empty). Coordinate with P4; whoever's first pushes it
+  __init__.py      # create if missing (empty). Coordinate with P1; whoever's first pushes it
   describer.py
 ```
 
@@ -48,7 +48,7 @@ backend/agents/llm/
    - Post-processing in code: map visible item names to ticket item names (case-insensitive + simple synonyms, e.g. "french fries"→"Fries", "soda/cup"→"Coke"); if `visibility != clear`, cap `confidence` at 0.5; validate with Pydantic, retry once, fallback `{visible_items: [], visibility: "blocked", notes: "Could not analyze", confidence: 0}`.
    - No `OPENAI_API_KEY` → return the stub.
 6. **Calibrate** on your six photos: run `python -m backend.agents.llm.describer demo/photos/<file>.jpg` (add a `__main__` block that uses a sample order) and record the outputs in `demo/photos/README.md`. Target: `fries_in_bag` shows Fries with confidence ≥ 0.6; `no_fries_in_bag` doesn't list Fries; `blocked` has `visibility=blocked`.
-7. **Hand to P4:** send them your describer outputs for each photo so the seed file's pre-filled descriptions are realistic.
+7. **Hand to the lead:** post your describer outputs (comment on a `question` issue or commit `demo/photos/README.md`) for each photo so the seed file's pre-filled descriptions are realistic.
 
 ## Privacy & security
 - Capture only on status events. **Never** record continuously or save video.

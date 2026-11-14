@@ -120,7 +120,7 @@ Hard rules enforced **in code**, not just in prompts:
 - A4/A5 talk about stations, shifts, items and channels, **never individual staff**.
 - All model outputs are validated with Pydantic; invalid → retry once → safe fallback (`NEEDS_REVIEW` / "insufficient evidence").
 
-### Demo seed story (owned by P4)
+### Demo seed story (owned by the lead)
 - Last 5 days, ~120 orders, channels: dine_in / takeout / doordash / ubereats / drive_thru, Stations 1–3.
 - 7 error charges: **4 × missing fries, Station 2, 12:00–1:00 PM**. Two of them have packing frames that *show* fries (→ DISPUTE) and two don't (→ ACCEPT). Plus 1 missing drink with no frames (→ NEEDS_REVIEW), 1 wrong item Station 1, 1 cold-food complaint tied to a 6-min stale handoff.
 - Red herring: a Station 1 charge at 11:40 that the root-cause agent should **not** turn into a pattern.
@@ -158,15 +158,15 @@ Hard rules enforced **in code**, not just in prompts:
 
 ---
 
-## 6. Build plan (team of 4, each with a coding agent)
+## 6. Build plan (3 builders with coding agents + 1 manager running the lead agent)
 Agent briefs: **[handoff/](handoff/)**. Shared rules for every agent: **[AGENTS.md](AGENTS.md)**.
 
 | Person | Owns (directory) | Brief |
 |---|---|---|
-| **P1 Backend** | `backend/` (except `backend/agents/llm/`) | [handoff/P1-backend.md](handoff/P1-backend.md) |
-| **P2 Capture & Vision** | `capture/`, `backend/agents/llm/describer.py`, `demo/photos/` | [handoff/P2-capture-vision.md](handoff/P2-capture-vision.md) |
-| **P3 Frontend** | `frontend/` | [handoff/P3-frontend.md](handoff/P3-frontend.md) |
-| **P4 AI agents + pitch** | `backend/agents/llm/` (except `describer.py`), `demo/seed/`, `pitch/` | [handoff/P4-agents-pitch.md](handoff/P4-agents-pitch.md) |
+| **P1 Ishan (Ish0212): Backend + AI agents** (heaviest; Claude Ultra / high reasoning) | `backend/` incl. `agents/llm/` except `describer.py`, `scripts/` | [handoff/P1-backend.md](handoff/P1-backend.md) |
+| **P2 rigshank: Capture & Vision** | `capture/`, `backend/agents/llm/describer.py`, `demo/photos/` | [handoff/P2-capture-vision.md](handoff/P2-capture-vision.md) |
+| **P3 saikarthikbattula: Frontend** | `frontend/` | [handoff/P3-frontend.md](handoff/P3-frontend.md) |
+| **Lead Yuvan (yuvanmuru-dev): manager** | `demo/seed/`, `pitch/`, contract + shared docs; runs the lead agent (Q&A, commit reviews, integration testing); drives the demo | [handoff/LEAD-manager.md](handoff/LEAD-manager.md) |
 
 | Time | Milestone |
 |---|---|

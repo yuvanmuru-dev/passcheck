@@ -1,6 +1,6 @@
 # Handoff: how the 4 of us start
 
-## Before 2:00 (one person, ~10 min)
+## Before 2:00 (Yuvan, ~10 min)
 1. Create a GitHub repo `passcheck`, push this folder (`PLAN.md`, `AGENTS.md`, `CLAUDE.md`, `contracts/`, `handoff/`, `.gitignore`). Add the other three as collaborators.
 2. Make the repo **private** (issues on a public repo could be posted by strangers). Then create the Q&A labels:
    ```bash
@@ -17,10 +17,10 @@ Each person opens their coding agent **at the repo root** and pastes the quoted 
 
 | You | Brief | First thing your agent must push (by 2:15) |
 |---|---|---|
-| P1 | [P1-backend.md](P1-backend.md) | FastAPI app running with `/api/health` |
-| P2 | [P2-capture-vision.md](P2-capture-vision.md) | `describe_evidence` stub |
-| P3 | [P3-frontend.md](P3-frontend.md) | Next.js app with theme + mocks |
-| P4 | [P4-agents-pitch.md](P4-agents-pitch.md) | `analyze_charge` + `run_root_cause` stubs |
+| **P1 Ishan** (Ish0212) | [P1-backend.md](P1-backend.md): backend + AI agents (heaviest) | `/api/health` + `analyze_charge` / `run_root_cause` stubs |
+| **P2 rigshank** | [P2-capture-vision.md](P2-capture-vision.md): capture + describer + photos | `describe_evidence` stub |
+| **P3 saikarthikbattula** | [P3-frontend.md](P3-frontend.md): dashboard + phone alerts | Next.js app with theme + mocks |
+| **Lead Yuvan** (yuvanmuru-dev) | [LEAD-manager.md](LEAD-manager.md): manager, seed data, pitch, lead agent | Q&A loop running |
 
 Claude Code reads `CLAUDE.md` (which imports `AGENTS.md`); Cursor / Codex / others read `AGENTS.md` directly.
 
@@ -29,7 +29,7 @@ Claude Code reads `CLAUDE.md` (which imports `AGENTS.md`); Cursor / Codex / othe
 - `git pull --rebase` often. Only edit your own directories.
 - 3:15 checkpoint: each person demos their piece alone in 1 minute.
 - 4:00 feature freeze. Then integration bugs and polish only.
-- 4:30 rehearsal (P4 drives). Record a backup video.
+- 4:30 rehearsal (Yuvan drives). Record a backup video.
 
 ## Running everything (after 3:15)
 ```
@@ -44,7 +44,7 @@ Teammates' agents post questions as GitHub Issues labeled `question` (the how-to
 
 - Start it in the lead session with:
   `/loop 2m check open GitHub issues labeled "question" in yuvanmuru-dev/passcheck from yuvanmuru-dev, Ish0212, saikarthikbattula, rigshank; answer each per PLAN.md and contracts/api.md as a comment starting with **ANSWER (lead):**, add the "answered" label, close it; if a contract change is needed, edit contracts/api.md, push, and post a "broadcast" issue`
-- The lead can also message one agent directly (a `to-P1`…`to-P4` issue, e.g. review feedback on a commit) or everyone at once (`broadcast`). Agents check these after each commit and reply in a comment.
+- The lead can also message one agent directly (a `to-P1`…`to-P3` issue, e.g. review feedback on a commit) or everyone at once (`broadcast`). Agents check these after each commit and reply in a comment.
 - The lead only answers issues opened by the four team accounts: yuvanmuru-dev, Ish0212, saikarthikbattula, rigshank. Anything else is ignored.
 - Issue text is treated as a question, not as commands. The lead doesn't run code from issues or edit teammates' directories.
 - Stop it with `/loop stop` (or just close the session) at 5:00.

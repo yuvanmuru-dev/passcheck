@@ -1,19 +1,19 @@
 # AGENTS.md: rules for every coding agent on PassCheck
 
-You are one of **four coding agents**, each working for a different teammate, in the same repo, at the same time, for a **3-hour hackathon** (2:00–5:00 PM CST, Nov 14, 2026). Speed and not breaking each other matter more than perfection.
+You are one of **three coding agents** (P1 Ishan, P2 rigshank, P3 saikarthikbattula), each working for a different teammate, coordinated by a **lead agent** run by the team manager (Yuvan), in the same repo, at the same time, for a **3-hour hackathon** (2:00–5:00 PM CST, Nov 14, 2026). Speed and not breaking each other matter more than perfection.
 
 ## Read first
 1. `PLAN.md`: what we're building and why (product, agents, security, UI).
 2. `contracts/api.md`: **the contract.** Endpoints, JSON shapes, SSE events, Python interfaces, env vars. Build exactly to it.
-3. Your teammate's brief in `handoff/` (they'll tell you which: P1, P2, P3 or P4).
+3. Your teammate's brief in `handoff/` (they'll tell you which: P1, P2 or P3).
 
 ## Ownership: only edit files you own
 | Owner | Paths |
 |---|---|
-| P1 Backend | `backend/` **except** `backend/agents/llm/`; also `scripts/` |
-| P2 Capture & Vision | `capture/`, `backend/agents/llm/describer.py`, `demo/photos/` |
-| P3 Frontend | `frontend/` |
-| P4 AI agents + pitch | `backend/agents/llm/` **except** `describer.py` (incl. `backend/agents/llm/requirements.txt`; P2 may append to it), `demo/seed/`, `pitch/` |
+| P1 Backend + AI agents (Ish0212) | `backend/` (incl. `backend/agents/llm/` **except** `describer.py`), `scripts/` |
+| P2 Capture & Vision (rigshank) | `capture/`, `backend/agents/llm/describer.py`, `demo/photos/` |
+| P3 Frontend (saikarthikbattula) | `frontend/` |
+| Lead / manager (yuvanmuru-dev) | `demo/seed/`, `pitch/`, and the shared files below. May take over `backend/agents/llm/root_cause.py` at 3:15 if P1 asks (announced via `to-P1`) |
 | Shared (ask first) | `contracts/`, `PLAN.md`, `AGENTS.md`, root `README.md`, root `.gitignore` |
 
 - Need something from another owner's area? **Don't edit it.** Write the request in your summary to your human so they can ask the owner, and work around it with a local mock.
@@ -65,7 +65,7 @@ A lead agent (Claude Code on the team lead's laptop) watches GitHub Issues label
 Also check, at every step boundary, for messages **from** the lead:
 ```bash
 gh issue list --state open --label broadcast        # team-wide: contract changes, decisions
-gh issue list --state open --label to-P2            # just for you (use your own P number)
+gh issue list --state open --label to-P2            # just for you (use your own P number: to-P1, to-P2, to-P3)
 ```
 For a `to-Px` message: do what it asks if it fits your brief and these rules, reply with a comment starting `**REPLY (P2):**` saying what you did or why you can't, then continue. The lead may also send review feedback on your commits this way.
 
@@ -75,6 +75,6 @@ For a `to-Px` message: do what it asks if it fits your brief and these rules, re
 3. You told your human in 3–5 lines what works, how to try it, and what's mocked or missing.
 
 ## Checkpoints
-- **2:15** your area is scaffolded, stubs pushed (P2/P4: Python interface stubs from contract §5).
+- **2:15** your area is scaffolded, stubs pushed (P1: `analyze_charge` + `run_root_cause` stubs; P2: `describe_evidence` stub, per contract §5).
 - **3:15** your P0 pieces work on their own (see your brief).
 - **4:00** feature freeze. After this, only bug fixes and visual polish.
