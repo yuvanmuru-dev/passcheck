@@ -44,7 +44,9 @@ The backend invokes the describer separately; capture itself makes no LLM calls.
 
 P1 imports `async describe_evidence(image_path: str, order: dict) -> dict` from
 `backend.agents.llm.describer`. Install `capture/requirements.txt` in the shared
-virtualenv (includes OpenAI/Pydantic for A2). The backend must load its own
+virtualenv (includes OpenAI/Pydantic/Pillow for A2 and HTTPX SOCKS proxy support).
+The describer itself uses Pillow, already in backend requirements, and can run
+without installing or importing OpenCV or the capture service. The backend must load its own
 `backend/.env` before invoking A2. The standalone calibration CLI loads that file.
 `OPENAI_MODEL` defaults to `gpt-4o`. No API key returns the contract's fixed example
 with `stub: true` and a `STUB:` note; this is mock output, never photo calibration.
@@ -59,3 +61,22 @@ python -m capture.smoke
 
 `capture.smoke` uses synthetic images, a local mock HTTP transport, and a fake
 OpenAI client. It does not use the network, camera, or real API key.
+
+## Integration verification (November 14, 2026)
+
+Verified against P1's actual FastAPI backend in a temporary database/storage
+directory, with a synthetic looping video and an explicitly empty OpenAI key:
+
+| Check | Result |
+| --- | --- |
+| Packing bump → SSE → saved evidence and A2 stub | Passed, 0.864 seconds |
+| Ready bump → saved evidence | Passed, 0.107 seconds |
+| Handed off bump → saved evidence | Passed, 0.111 seconds |
+| Uploaded frame hash matches image endpoint bytes | Passed for all three frames |
+| Manual `--once --file` upload to actual backend | Passed, source is `upload` |
+| Offline smoke check on shared Python 3.11 virtualenv | Passed |
+
+These timings are local test results, not production latency guarantees. No real
+webcam, food-photo calibration, or live OpenAI response has been verified yet.
+Test data was isolated and removed after verification; the demo database was not
+seeded or wiped.

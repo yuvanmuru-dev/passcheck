@@ -22,4 +22,6 @@ python -m backend.agents.llm.describer demo/photos/fries_in_bag.jpg
 Record the actual JSON outputs below once the six photos exist and the calls
 succeed; the lead can then update seed descriptions. A result with `stub: true`
 is a fixed contract example and is **not** a measured result for that photograph.
-No real calibration or end-to-end camera/backend test has been claimed yet.
+Real-photo calibration and webcam testing remain pending. The capture pipeline
+has passed a real-backend integration test using a synthetic looping video and
+the explicitly marked no-key describer stub; see `capture/README.md`.
