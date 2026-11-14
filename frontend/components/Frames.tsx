@@ -1,11 +1,25 @@
 "use client";
 
+import { useState } from "react";
 import { imageUrl } from "@/lib/api";
 import { clock, itemSummary } from "@/lib/format";
 import type { Evidence } from "@/lib/types";
 
 const KIND: Record<Evidence["kind"], string> = { packing: "Packing", ready: "Ready", handed_off: "Handed off" };
 const ORDER: Evidence["kind"][] = ["packing", "ready", "handed_off"];
+
+function FrameImage({ src, alt }: { src: string; alt: string }) {
+  const [broken, setBroken] = useState(false);
+  if (broken) {
+    return (
+      <div className="flex aspect-[4/3] w-full items-center justify-center bg-black/40 px-4 text-center text-sm text-mute">
+        Frame image not available
+      </div>
+    );
+  }
+  // eslint-disable-next-line @next/next/no-img-element
+  return <img src={src} alt={alt} onError={() => setBroken(true)} className="aspect-[4/3] w-full bg-black/40 object-cover" />;
+}
 
 /** Evidence frames for one order. Descriptions come from the vision model and are shown as plain text. */
 export default function Frames({ evidence, cited = [] }: { evidence: Evidence[]; cited?: string[] }) {
@@ -21,8 +35,7 @@ export default function Frames({ evidence, cited = [] }: { evidence: Evidence[];
         const isCited = cited.includes(e.id);
         return (
           <figure key={e.id} className={`card overflow-hidden ${isCited ? "border-gold" : ""}`}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={imageUrl(e.image_url)} alt={`${KIND[e.kind]} frame at ${clock(e.captured_at)}`} className="aspect-[4/3] w-full bg-black/40 object-cover" />
+            <FrameImage src={imageUrl(e.image_url)} alt={`${KIND[e.kind]} frame at ${clock(e.captured_at)}`} />
             <figcaption className="space-y-1.5 p-3 text-sm">
               <div className="flex flex-wrap items-center gap-2">
                 <span className="chip">{KIND[e.kind]}</span>

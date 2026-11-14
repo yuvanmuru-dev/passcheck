@@ -308,6 +308,7 @@ export default function Disputes() {
                           <button className="btn btn-sm ml-auto" onClick={analyze} disabled={!!busy}>
                             {busy === "analyze" ? "Analyzing…" : "Analyze again"}
                           </button>
+                          {!draft.trim() && <p className="w-full text-sm text-mute">To dispute this charge, write the dispute text first.</p>}
                         </div>
                       )}
                     </div>
