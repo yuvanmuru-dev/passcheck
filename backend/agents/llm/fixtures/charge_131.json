@@ -1,1 +1,86 @@
-{"charge":{"id":"chg_131","order_id":"ord_131","platform":"doordash","reason":"missing_item","items":[{"name":"Fries","qty":1}],"amount":3.99,"customer_note":"No fries in the bag"},"order":{"id":"ord_131","ticket_no":131,"channel":"doordash","station":2,"items":[{"name":"Fries","qty":1}],"created_at":"2026-11-14T18:10:00Z"},"evidence":[{"id":"ev_131","order_id":"ord_131","kind":"packing","captured_at":"2026-11-14T18:13:40Z","sha256":"def123456","description":{"visible_items":[{"name":"Burger","qty":1}],"visibility":"clear","notes":"Only a wrapped burger is visible in the open bag; no fries are present.","confidence":0.86}}]}
+{
+  "charge": {
+    "platform": "ubereats",
+    "ticket_no": 131,
+    "reason": "missing_item",
+    "items": [
+      {
+        "name": "Fries",
+        "qty": 1
+      }
+    ],
+    "amount": 3.99,
+    "customer_note": "No fries in my bag",
+    "charged_at": "2026-11-12T20:22:41Z"
+  },
+  "order": {
+    "external_id": "toast_667556",
+    "ticket_no": 131,
+    "channel": "ubereats",
+    "station": 2,
+    "items": [
+      {
+        "name": "Cheeseburger",
+        "qty": 1,
+        "price": 6.49,
+        "modifiers": []
+      },
+      {
+        "name": "Fries",
+        "qty": 1,
+        "price": 3.99,
+        "modifiers": []
+      },
+      {
+        "name": "Coke",
+        "qty": 1,
+        "price": 2.49,
+        "modifiers": []
+      }
+    ],
+    "created_at": "2026-11-11T18:12:01Z",
+    "status": "handed_off",
+    "packing_at": "2026-11-11T18:19:27Z",
+    "ready_at": "2026-11-11T18:20:43Z",
+    "handed_off_at": "2026-11-11T18:22:41Z"
+  },
+  "evidence": [
+    {
+      "ticket_no": 131,
+      "kind": "packing",
+      "captured_at": "2026-11-11T18:19:28Z",
+      "image": "demo/photos/no_fries_in_bag.jpg",
+      "description": {
+        "visible_items": [
+          {
+            "name": "Cheeseburger",
+            "qty": 1
+          },
+          {
+            "name": "Coke",
+            "qty": 1
+          }
+        ],
+        "visibility": "clear",
+        "notes": "Open bag; wrapped sandwich and drink visible; no fries sleeve seen.",
+        "confidence": 0.82
+      },
+      "id": "ev_131_26",
+      "order_id": "ord_131"
+    },
+    {
+      "ticket_no": 131,
+      "kind": "handed_off",
+      "captured_at": "2026-11-11T18:22:42Z",
+      "image": "demo/photos/sealed_bag.jpg",
+      "description": {
+        "visible_items": [],
+        "visibility": "partial",
+        "notes": "Bag folded and stapled on the counter; contents not visible.",
+        "confidence": 0.2
+      },
+      "id": "ev_131_27",
+      "order_id": "ord_131"
+    }
+  ]
+}

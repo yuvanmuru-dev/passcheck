@@ -1,1 +1,48 @@
-{"charge":{"id":"chg_drink","order_id":"ord_drink","platform":"doordash","reason":"missing_item","items":[{"name":"Coke","qty":1}],"amount":2.49,"customer_note":"Drink missing"},"order":{"id":"ord_drink","ticket_no":120,"channel":"doordash","station":1,"items":[{"name":"Coke","qty":1}],"created_at":"2026-11-14T18:10:00Z"},"evidence":[]}
+{
+  "charge": {
+    "platform": "doordash",
+    "ticket_no": 169,
+    "reason": "missing_item",
+    "items": [
+      {
+        "name": "Coke",
+        "qty": 1
+      }
+    ],
+    "amount": 2.49,
+    "customer_note": "No drink in the order",
+    "charged_at": "2026-11-13T18:29:08Z"
+  },
+  "order": {
+    "external_id": "toast_e6042f",
+    "ticket_no": 169,
+    "channel": "doordash",
+    "station": 3,
+    "items": [
+      {
+        "name": "Nuggets (6)",
+        "qty": 1,
+        "price": 5.49,
+        "modifiers": []
+      },
+      {
+        "name": "Fries",
+        "qty": 1,
+        "price": 3.99,
+        "modifiers": []
+      },
+      {
+        "name": "Coke",
+        "qty": 1,
+        "price": 2.49,
+        "modifiers": []
+      }
+    ],
+    "created_at": "2026-11-13T00:21:00Z",
+    "status": "handed_off",
+    "packing_at": "2026-11-13T00:27:14Z",
+    "ready_at": "2026-11-13T00:28:01Z",
+    "handed_off_at": "2026-11-13T00:29:08Z"
+  },
+  "evidence": []
+}

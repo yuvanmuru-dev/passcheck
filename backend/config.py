@@ -1,8 +1,10 @@
 import os
 from pathlib import Path
+from dotenv import load_dotenv
 
 ROOT = Path(__file__).resolve().parent.parent
 BACKEND = Path(__file__).resolve().parent
+load_dotenv(BACKEND / ".env")
 def setting(name, default): return os.getenv(name, default)
 DATABASE_URL = setting("DATABASE_URL", "sqlite:///./passcheck.db")
 DB_PATH = DATABASE_URL.removeprefix("sqlite:///")

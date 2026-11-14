@@ -11,6 +11,20 @@ from .config import *
 from .security import verify_hmac, capture_auth, manager_auth
 from .agents.dispatcher import create_alert
 from .agents.llm.dispute import analyze_charge
+from .schemas import POSPayload, ChargePayload
+from pydantic import ValidationError
+
+def validate_payload(model, value):
+    try:
+        parsed=model.model_validate(value)
+        for name in ('created_at','charged_at'):
+            dt=getattr(parsed,name,None)
+            if dt is not None:
+                if dt.tzinfo is None: dt=dt.replace(tzinfo=timezone.utc)
+                setattr(parsed,name,dt.astimezone(timezone.utc))
+        return parsed.model_dump(mode='json')
+    except ValidationError:
+        err('invalid_payload','Request fields do not match the API contract',422)
 
 app=FastAPI(title="PassCheck API")
 app.add_middleware(CORSMiddleware,allow_origins=["http://localhost:3000"],allow_methods=["*"],allow_headers=["Content-Type","X-Manager-Pin","X-Signature","X-Capture-Key"])
@@ -55,6 +69,7 @@ async def create_order(request:Request):
     body=await verify_hmac(request)
     try: x=json.loads(body)
     except Exception: err("invalid_json","Invalid JSON",400)
+    x=validate_payload(POSPayload,x)
     for o in db.all("orders"):
         if o.get("external_id")==x.get("external_id"): return order_shape(o)
     if not x.get("external_id") or not x.get("ticket_no"): err("invalid_order","external_id and ticket_no required",422)
@@ -81,6 +96,7 @@ async def set_status(order_id:str, request:Request):
     o["status"]=status; o[status+"_at"]=now(); db.put("orders",order_id,o); o=order_shape(o); await events.publish("order.updated",o); return o
 
 async def describe_task(path, order, evidence):
+    if evidence.get("kind") != "packing": return
     try:
         from .agents.llm.describer import describe_evidence
         evidence["description"]=await describe_evidence(str(path),order); db.put("evidence",evidence["id"],evidence); await events.publish("evidence.described",evidence)
@@ -105,6 +121,7 @@ async def get_image(evidence_id:str):
     return Response(path.read_bytes(),media_type="image/jpeg")
 
 async def add_charge(x):
+    x=validate_payload(ChargePayload,x)
     order=next((o for o in db.all("orders") if o.get("ticket_no")==int(x.get("ticket_no",-1))),None)
     if not order: err("not_found","Order for ticket number not found")
     if len(str(x.get("customer_note","")))>500: err("invalid_charge","Customer note too long",422)
@@ -163,7 +180,7 @@ async def stats(x_manager_pin:str=Header(None,alias="X-Manager-Pin")):
     manager_auth(x_manager_pin); charges=db.all("charges"); today=datetime.now(timezone.utc).date().isoformat(); stale=[a for a in db.all("alerts") if a["type"]=="stale_handoff" and a["created_at"].startswith(today)]; handoffs=[]
     for o in db.all("orders"):
         try:
-            if o.get("handed_off_at"): handoffs.append((datetime.fromisoformat(o["handed_off_at"].replace("Z","+00:00"))-datetime.fromisoformat(o["created_at"].replace("Z","+00:00"))).total_seconds())
+            if o.get("handed_off_at") and o.get("ready_at"): handoffs.append((datetime.fromisoformat(o["handed_off_at"].replace("Z","+00:00"))-datetime.fromisoformat(o["ready_at"].replace("Z","+00:00"))).total_seconds())
         except ValueError: pass
     def total(cs): return round(sum(float(c["amount"]) for c in cs),2)
     insights=db.all("insights")

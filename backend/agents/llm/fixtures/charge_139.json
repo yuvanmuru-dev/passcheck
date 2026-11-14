@@ -1,1 +1,92 @@
-{"charge":{"id":"chg_139","order_id":"ord_139","platform":"doordash","reason":"missing_item","items":[{"name":"Fries","qty":1}],"amount":3.99,"customer_note":"No fries in the bag"},"order":{"id":"ord_139","ticket_no":139,"channel":"doordash","station":2,"items":[{"name":"Fries","qty":1}],"created_at":"2026-11-14T18:10:00Z"},"evidence":[{"id":"ev_139","order_id":"ord_139","kind":"packing","captured_at":"2026-11-14T18:13:40Z","sha256":"abc123456","description":{"visible_items":[{"name":"Fries","qty":1}],"visibility":"clear","notes":"A fries sleeve is placed in the open delivery bag.","confidence":0.86}}]}
+{
+  "charge": {
+    "platform": "doordash",
+    "ticket_no": 139,
+    "reason": "missing_item",
+    "items": [
+      {
+        "name": "Fries",
+        "qty": 1
+      }
+    ],
+    "amount": 3.99,
+    "customer_note": "Fries were missing",
+    "charged_at": "2026-11-13T21:19:24Z"
+  },
+  "order": {
+    "external_id": "toast_157124",
+    "ticket_no": 139,
+    "channel": "doordash",
+    "station": 2,
+    "items": [
+      {
+        "name": "Cheeseburger",
+        "qty": 2,
+        "price": 6.49,
+        "modifiers": [
+          "no cheese"
+        ]
+      },
+      {
+        "name": "Fries",
+        "qty": 1,
+        "price": 3.99,
+        "modifiers": []
+      },
+      {
+        "name": "Coke",
+        "qty": 1,
+        "price": 2.49,
+        "modifiers": []
+      }
+    ],
+    "created_at": "2026-11-11T18:52:08Z",
+    "status": "handed_off",
+    "packing_at": "2026-11-11T18:59:25Z",
+    "ready_at": "2026-11-11T19:00:43Z",
+    "handed_off_at": "2026-11-11T19:02:24Z"
+  },
+  "evidence": [
+    {
+      "ticket_no": 139,
+      "kind": "packing",
+      "captured_at": "2026-11-11T18:59:26Z",
+      "image": "demo/photos/fries_in_bag.jpg",
+      "description": {
+        "visible_items": [
+          {
+            "name": "Cheeseburger",
+            "qty": 2
+          },
+          {
+            "name": "Fries",
+            "qty": 1
+          },
+          {
+            "name": "Coke",
+            "qty": 1
+          }
+        ],
+        "visibility": "clear",
+        "notes": "Open bag; items visible going in, including a red fries sleeve.",
+        "confidence": 0.8
+      },
+      "id": "ev_139_38",
+      "order_id": "ord_139"
+    },
+    {
+      "ticket_no": 139,
+      "kind": "handed_off",
+      "captured_at": "2026-11-11T19:02:25Z",
+      "image": "demo/photos/sealed_bag.jpg",
+      "description": {
+        "visible_items": [],
+        "visibility": "partial",
+        "notes": "Bag folded and stapled on the counter; contents not visible.",
+        "confidence": 0.2
+      },
+      "id": "ev_139_39",
+      "order_id": "ord_139"
+    }
+  ]
+}
