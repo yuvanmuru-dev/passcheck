@@ -27,7 +27,7 @@ You build the **Root-Cause agent (A5)**, which is the "Why?" moment of the demo,
 ## Seed story (`demo/seed/week.json`, lead agent builds it)
 Shape: contract §6. Story: PLAN §3.
 - Nov 10–14, ~120 orders, 11:00–14:00 and 17:00–20:00 CT, ≈ 40% delivery, Stations 1–3; Station 2 runs ~2.3× its average volume 12:00–13:00.
-- Tickets 100–219. **Fixed demo tickets:** `#139` (DoorDash, Station 2, 12:13, `fries_in_bag.jpg` → DISPUTE) · `#131` (Uber Eats, Station 2, 12:40, `no_fries_in_bag.jpg` → ACCEPT) · `#142` (status `new`, no evidence, for the live bump).
+- Tickets 100–219. **Fixed demo tickets:** `#139` (DoorDash, Station 2, Nov 11 12:52, `fries_in_bag.jpg` → DISPUTE) · `#131` (Uber Eats, Station 2, Nov 11 12:12, `no_fries_in_bag.jpg` → ACCEPT) · `#219` (status `new`, for the live bump) · `#218` (status `packing`). **Built:** see `demo/seed/README.md`.
 - 7 charges: 4 × fries Station 2 12:00–13:00 (2 with fries visible, 2 without), 1 missing drink with no evidence, 1 wrong item Station 1, 1 cold food on an order with a 6-min ready→handoff gap. Red herring: a Station 1 charge at 11:40.
 - Descriptions pre-filled (no API calls at seed time). Swap in saikarthikbattula's real describer outputs when they're posted.
 - Generator: `demo/seed/generate.py` with a fixed random seed, so it's re-runnable.
@@ -38,7 +38,7 @@ Uses Ishan's `common.py` helper (`call_json`) once it's pushed; until then write
 - **Count in code first** (LLMs miscount): charges by item / station / hour / channel / reason; each station's per-hour volume vs its average; stale handoffs by hour; disputed vs accepted. Send those aggregates **plus** the raw lists (capped: ≤ 200 orders, ≤ 50 charges, notes ≤ 500 chars).
 - **System prompt essentials:** "Find the single most likely operational cause of these losses. Use only the data. Explain at station / shift / item / channel level, never individuals. A pattern needs at least 3 events. Give ≤ 3 recommendations, ranked, each doable today, with a rough $ or time impact. If the pattern is weak, cause = 'Insufficient evidence'."
 - **Post-validation:** every ID in `evidence` must exist in the bundle (filter), ≤ 3 recommendations with priorities 1..n, confidence 0–1.
-- **Acceptance on the lead's `week.json`:** names fries / Station 2 / lunch; does **not** turn the 11:40 Station 1 charge into a pattern.
+- **Acceptance on the lead's `week.json`:** names fries / Station 2 / lunch; does **not** turn the #104 Station 1 charge (~11:47) into a pattern.
 - **Optional (only if ahead at 3:45):** tool-calling over the in-memory bundle (`count_charges(by)`, `station_load(station, hour)`, `stale_handoffs(hour)`).
 
 

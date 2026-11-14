@@ -61,7 +61,7 @@ LLMSoftware already has the **POS ticket** and the **counter camera** for each r
 | U8 | Voice-note question: "how many charges this week?" | P2 |
 
 ### 1.7 Acceptance criteria (demo)
-- Bumping #142 to Packing captures a frame from the webcam within 2 s and shows it on the order timeline.
+- Bumping #219 (seeded as `new`) to Packing captures a frame from the webcam within 2 s and shows it on the order timeline.
 - A ready order not handed off for 30 s (demo setting) → stale alert in the UI + on a phone.
 - "Simulate DoorDash charge" on #139 (frames show fries going in) → recommendation **DISPUTE**, cites evidence IDs, draft text ready.
 - Charge on #131 (frames show no fries) → **ACCEPT**, and it's counted in insights.
@@ -123,7 +123,7 @@ Hard rules enforced **in code**, not just in prompts:
 ### Demo seed story (owned by the lead)
 - Last 5 days, ~120 orders, channels: dine_in / takeout / doordash / ubereats / drive_thru, Stations 1–3.
 - 7 error charges: **4 × missing fries, Station 2, 12:00–1:00 PM**. Two of them have packing frames that *show* fries (→ DISPUTE) and two don't (→ ACCEPT). Plus 1 missing drink with no frames (→ NEEDS_REVIEW), 1 wrong item Station 1, 1 cold-food complaint tied to a 6-min stale handoff.
-- Red herring: a Station 1 charge at 11:40 that the root-cause agent should **not** turn into a pattern.
+- Red herring: a Station 1 wrong-item charge at ~11:47 (#104) that the root-cause agent should **not** turn into a pattern.
 
 ---
 
@@ -186,7 +186,7 @@ Agent briefs: **[handoff/](handoff/)**. Shared rules for every agent: **[AGENTS.
 
 ## 7. Demo script (3 min)
 1. **Hook (20 s):** "Delivery apps tell you to photograph every bag. Nobody does at Friday lunch. Then DoorDash takes $4 for 'missing fries' and you can't prove otherwise."
-2. **Zero extra work (40 s):** bump #142 Packing → webcam frame appears on its timeline. "That's it. Staff did nothing new."
+2. **Zero extra work (40 s):** bump #219 Packing → webcam frame appears on its timeline. "That's it. Staff did nothing new."
 3. **Time (20 s):** a ready bag sits → timer goes red → phone buzzes.
 4. **Prove (60 s):** "Two days later…" simulate a DoorDash charge on #139 → one tap → frames show fries going in → DISPUTE + draft → Approve. Then #131 → ACCEPT: "it's honest when we really messed up."
 5. **Learn (30 s):** "Why?" → "Fries, Station 2, 12–1 PM, 4 charges, Station 2 load 2.3×" → 3 fixes.
