@@ -11,7 +11,7 @@ Story in one paragraph:
   frames showing fries going in (#139, #158 → DISPUTE), two show no fries (#131, #184 → ACCEPT).
   Plus: missing drink with no frames (#169 → NEEDS_REVIEW), wrong item at Station 1 at 11:40
   (#104 ~11:47, frame blocked, the red herring), cold food on an order that sat 6 min (#194).
-  Live demo: #219 is left in status "new" for the on-stage bump; #218 is "packing".
+  Live demo: #218 (Cheeseburger, Fries, Coke: matches the photo) and #219 (Nuggets: mismatch) are left "new".
 """
 from __future__ import annotations
 
@@ -90,6 +90,10 @@ SPECIAL = {
               items=["Nuggets (6)", "Fries", "Coke"], frame=None),       # capture missed it
     184: dict(channel="ubereats", station=2,
               items=["Cheeseburger", "Fries", "Milkshake"], frame="no_fries"),
+    219: dict(channel="doordash", station=1,
+              items=["Nuggets (6)", "Fries", "Coke"], frame=None),        # live demo: photo shows a burger -> mismatch
+    218: dict(channel="doordash", station=2,
+              items=["Cheeseburger", "Fries", "Coke"], frame=None),       # live demo: matches the photo
     194: dict(channel="doordash", station=3,
               items=["Chicken Sandwich", "Fries", "Coke"], frame="fries", handoff_gap_s=372),
 }
@@ -155,7 +159,7 @@ def main() -> None:
 
         status, packing_at, ready_at, handed_at = "handed_off", packing, ready, handed
         if ticket == 218:
-            status, ready_at, handed_at = "packing", None, None
+            status, packing_at, ready_at, handed_at = "new", None, None, None
         if ticket == 219:
             status, packing_at, ready_at, handed_at = "new", None, None, None
 

@@ -87,6 +87,8 @@ def _map_items(description: Description, order: dict) -> dict:
                 parts.append("camera sees " + ", ".join(extra) + " - not on ticket")
             flag = "Possible mismatch: " + "; ".join(parts) + ". "
             result["notes"] = (flag + result["notes"])[:200]
+        else:
+            result["notes"] = ("Matches ticket. " + result["notes"])[:200]
     return Description.model_validate(result).model_dump()
 
 
