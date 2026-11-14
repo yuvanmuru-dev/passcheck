@@ -64,7 +64,8 @@ def _map_items(description: Description, order: dict) -> dict:
         matches = [name for name in names if _normalized(name) == value]
         if not matches:
             for group in SYNONYMS:
-                if value in group:
+                # "foil-wrapped burger" / "lidded drink cup" contain a synonym word.
+                if value in group or any(f" {w} " in f" {value} " for w in group):
                     matches = [name for name in names if _normalized(name) in group]
                     break
         # Ambiguous drink/burger types are kept generic rather than guessed.
@@ -73,6 +74,19 @@ def _map_items(description: Description, order: dict) -> dict:
     result["visible_items"] = [{"name": name, "qty": qty} for name, qty in merged.items()]
     if result["visibility"] != "clear":
         result["confidence"] = min(result["confidence"], 0.5)
+    elif names and result["confidence"] >= 0.6:
+        # Compare what the camera saw with the POS ticket (informational; staff decide).
+        seen = {item["name"] for item in result["visible_items"]}
+        missing = [n for n in dict.fromkeys(names) if n not in seen]
+        extra = [n for n in seen if n not in names]
+        if missing or extra:
+            parts = []
+            if missing:
+                parts.append("ticket has " + ", ".join(missing) + " - not seen")
+            if extra:
+                parts.append("camera sees " + ", ".join(extra) + " - not on ticket")
+            flag = "Possible mismatch: " + "; ".join(parts) + ". "
+            result["notes"] = (flag + result["notes"])[:200]
     return Description.model_validate(result).model_dump()
 
 
