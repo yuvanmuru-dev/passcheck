@@ -2,6 +2,7 @@
 import asyncio
 import base64
 import json
+import io
 import logging
 import os
 import re
@@ -77,6 +78,18 @@ def _fallback():
     return {"visible_items": [], "visibility": "blocked", "notes": "Could not analyze", "confidence": 0.0}
 
 
+def _image_jpeg(path: str) -> bytes:
+    # Pillow is already a backend dependency; A2 must not require the camera service.
+    from PIL import Image, ImageOps
+
+    with Image.open(path) as original:
+        image = ImageOps.exif_transpose(original).convert("RGB")
+        image.thumbnail((768, 768))
+        output = io.BytesIO()
+        image.save(output, "JPEG", quality=85)
+        return output.getvalue()
+
+
 def _stub():
     return {
         "visible_items": [
@@ -97,10 +110,9 @@ async def describe_evidence(image_path: str, order: dict) -> dict:
         return _stub()
     try:
         from openai import AsyncOpenAI
-        from capture.camera import image_jpeg
 
         # Re-encode here as well: direct uploads may not have passed through capture.
-        jpeg = await asyncio.to_thread(image_jpeg, image_path)
+        jpeg = await asyncio.to_thread(_image_jpeg, image_path)
         url = "data:image/jpeg;base64," + base64.b64encode(jpeg).decode("ascii")
         content = [
             {"type": "text", "text": json.dumps({"order_items": order.get("items", [])})},
