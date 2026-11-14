@@ -1,0 +1,11 @@
+{
+  "provenance": "AI-generated synthetic demo fixtures supplied by the user; not recorded restaurant footage or real-order evidence.",
+  "sha256": {
+    "fries_in_bag.jpg": "72a3c7c94f837cd88fd721733cfb4e67d3223d31b9634cd153c42984d59dbbed",
+    "no_fries_in_bag.jpg": "5d992d1664e9f286261131c32a9f7c66293a498a0c9fde2e84235497c8b01388",
+    "sealed_bag.jpg": "72b59330c0848cf49b4849d76631e85ea3c9bbc574edab213150dfc8bce9f1de",
+    "blocked.jpg": "d9fedb3a5ffeb0aca8a5f0407b6757f485ca34b329a3c80506cf7e3c2289cff6",
+    "empty_counter.jpg": "e87b8db70ca0f49dcfd9a9308536e6f66f911f184bdc4e814ae5dc58be6c1fba",
+    "drink_only.jpg": "25a1386bcbc69a72e011b252ddb78c75a2219db32fa1253c0daeb8d7de0d6ac5"
+  }
+}
