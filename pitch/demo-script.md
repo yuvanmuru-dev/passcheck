@@ -4,9 +4,9 @@
 | Who | Does |
 |---|---|
 | **Yuvan** | Talks the whole time. Never touches the keyboard. |
-| **Krish** | Drives the dashboard (P3: his UI). |
-| **Karthik** | Holds the bag and food under the webcam (P2: his capture). |
-| **Ishan** | Watches the backend terminal; fixes or restarts if anything stalls. Holds the phone that buzzes. |
+| **Ishan** | Drives the dashboard (he built it) and restarts anything that stalls. |
+| **Karthik** | Packs the bag under the iPhone camera (P2: his capture); runs the `capture --once` backup if needed. |
+| **Krish** (remote) | Before 4:00: runs `main` at home and walks steps 1–11 as a remote tester, filing bugs as `question` issues. |
 
 ## Setup (by 4:30, on the demo laptop)
 1. `backend/.env` has the OpenAI key and `DEMO_MODE=true`.
@@ -19,10 +19,10 @@
 8. Second browser tab already open on **Disputes**, third on **Insights**.
 
 ## The run
-| # | Yuvan says | Krish clicks / Karthik does | Expected on screen |
+| # | Yuvan says | Ishan clicks / Karthik does | Expected on screen |
 |---|---|---|---|
 | 1 | "This is a restaurant's counter. Order #219 just came in from DoorDash." | Board visible | #219 in **New** |
-| 2 | "Staff start packing. They press the same button they always press." | Karthik puts food into the bag → Krish taps **Packing** on #219 | 📷 dot on #219 within ~2 s |
+| 2 | "Staff start packing. They press the same button they always press." | Karthik puts food into the bag → Ishan taps **Packing** on #219 | 📷 dot on #219 within ~2 s |
 | 3 | "That's it. That bag is now on the record." | Click #219 | Timeline shows the live frame + "visible: …Fries…" description |
 | 4 | "Bag's ready." | Back, tap **Ready** on #219, then **don't hand it off** | Timer starts |
 | 5 | "But it's lunch rush and nobody picks it up…" | Wait ~30 s (talk through slide 3 meanwhile if needed) | Timer red, **phone buzzes**: "Bag #219 ready … not handed off" |
@@ -37,7 +37,7 @@
 ## Backups (decide fast, don't debug on stage)
 | If… | Then… |
 |---|---|
-| Webcam / capture doesn't snap at step 2 | Krish uses the order page's **upload photo** (or Ishan runs `python -m capture.main --once ord_219 packing --file demo/photos/fries_in_bag.jpg`). Keep talking. |
+| Webcam / capture doesn't snap at step 2 | Karthik runs `python -m capture.main --once ord_219 packing --file demo/photos/fries_in_bag.jpg`). Keep talking. |
 | Step 8 says NEEDS_REVIEW on #219 (live frame unclear) | "Live camera angle was off, so it refused to guess. That's the point." Then open seeded **#139** → Analyze → **DISPUTE**. |
 | Phone doesn't buzz | Point at the phone mockup on screen: "Same alert goes to the manager's phone." |
 | OpenAI slow or down | Dispute and Root-Cause both have no-key fallbacks; restart the backend without the key if needed. |
