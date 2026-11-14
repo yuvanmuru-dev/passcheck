@@ -73,10 +73,11 @@ async def run(args):
                 order_id, kind = order.get("id"), order.get("status")
                 if not isinstance(order_id, str) or not isinstance(kind, str) or kind not in KINDS:
                     continue
-                token = (order_id, kind)
-                if token not in seen:
-                    seen.add(token)
-                    await queue.put(token)
+                # Include the status timestamp so a re-seeded demo order is captured again.
+                stamp = order.get(f"{kind}_at")
+                if (order_id, kind, stamp) not in seen:
+                    seen.add((order_id, kind, stamp))
+                    await queue.put((order_id, kind))
         finally:
             for task in workers:
                 task.cancel()
