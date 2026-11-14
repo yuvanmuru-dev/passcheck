@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import DemoBar from "@/components/DemoBar";
 import Frames from "@/components/Frames";
 import PhoneMockup from "@/components/PhoneMockup";
@@ -54,6 +54,7 @@ export default function PassBoard() {
   const loadDetail = useCallback(async (id: string) => {
     try {
       setDetail(await api<OrderDetail>(`/api/orders/${id}`));
+      requestAnimationFrame(() => recordRef.current?.scrollIntoView({ block: "nearest" }));
     } catch {
       /* keep what we have */
     }
@@ -70,9 +71,13 @@ export default function PassBoard() {
     return () => clearInterval(t);
   }, [load]);
 
+  const recordRef = useRef<HTMLElement>(null);
   useEffect(() => {
     setDetail(null);
-    if (openId) loadDetail(openId);
+    if (openId) {
+      loadDetail(openId);
+      recordRef.current?.scrollIntoView({ block: "nearest" });
+    }
   }, [openId, loadDetail]);
 
   const live = useStream(
@@ -128,6 +133,19 @@ export default function PassBoard() {
       <div className="flex flex-1 flex-col gap-5 p-5 lg:flex-row">
         <main className="min-w-0 flex-1">
           {error && <div className="note-err mb-4" role="alert">{error}</div>}
+          {open && (
+            <section ref={recordRef} className="card mb-5 scroll-mt-4 p-4" aria-label={`Order ${open.ticket_no} record`}>
+              <div className="mb-3 flex items-center gap-3">
+                <h2 className="text-lg">
+                  #{open.ticket_no} on the record
+                </h2>
+                <span className="chip">{STATUS_LABEL[open.status]}</span>
+                <button className="btn btn-sm ml-auto" onClick={() => setOpenId("")}>Close</button>
+              </div>
+              {detail && detail.order.id === open.id ? <Frames evidence={detail.evidence} /> : <p className="text-sm text-mute">Loading frames…</p>}
+            </section>
+          )}
+
           {!loaded ? (
             <p className="text-mute">Loading the pass…</p>
           ) : (
@@ -177,19 +195,6 @@ export default function PassBoard() {
                 );
               })}
             </div>
-          )}
-
-          {open && (
-            <section className="card mt-6 p-4" aria-label={`Order ${open.ticket_no} record`}>
-              <div className="mb-3 flex items-center gap-3">
-                <h2 className="text-lg">
-                  #{open.ticket_no} on the record
-                </h2>
-                <span className="chip">{STATUS_LABEL[open.status]}</span>
-                <button className="btn btn-sm ml-auto" onClick={() => setOpenId("")}>Close</button>
-              </div>
-              {detail && detail.order.id === open.id ? <Frames evidence={detail.evidence} /> : <p className="text-sm text-mute">Loading frames…</p>}
-            </section>
           )}
         </main>
         {demo && <PhoneMockup alerts={alerts} />}
