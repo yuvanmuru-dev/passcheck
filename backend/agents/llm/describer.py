@@ -129,7 +129,7 @@ async def describe_evidence(image_path: str, order: dict) -> dict:
                             "name": "evidence_description", "strict": True,
                             "schema": Description.model_json_schema(),
                         }},
-                        max_tokens=600,
+                        max_completion_tokens=600,
                     )
                     description = Description.model_validate_json(response.choices[0].message.content or "")
                     return _map_items(description, order)
