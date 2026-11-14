@@ -19,7 +19,7 @@ Each person opens their coding agent **at the repo root** and pastes the quoted 
 |---|---|---|
 | **P1 Ishan** (Ish0212) | [P1-backend.md](P1-backend.md): backend + Dispute agent (heaviest) | `/api/health` + `analyze_charge` stub |
 | **P2 saikarthikbattula** | [P2-capture-vision.md](P2-capture-vision.md): capture + describer + photos | `describe_evidence` stub |
-| **P3 rigshank** | [P3-frontend.md](P3-frontend.md): dashboard + phone alerts | Next.js app with theme + mocks |
+| **P3 → Ishan (reassigned 3:15)** | [P3-frontend.md](P3-frontend.md): dashboard + phone alerts, cut-down scope | Next.js app with theme + mocks |
 | **Lead Yuvan** (yuvanmuru-dev) | [LEAD-manager.md](LEAD-manager.md): manager + Root-Cause agent, seed data, pitch, lead agent | `run_root_cause` stub + Q&A loop running |
 
 Claude Code reads `CLAUDE.md` (which imports `AGENTS.md`); Cursor / Codex / others read `AGENTS.md` directly.

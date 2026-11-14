@@ -10,7 +10,7 @@ You build the **Root-Cause agent (A5)**, which is the "Why?" moment of the demo,
 |---|---|---|
 | `to-P1` | Ishan (Ish0212) | Backend + Dispute agent (heaviest) |
 | `to-P2` | saikarthikbattula | Capture service + Evidence Describer + tray photos |
-| `to-P3` | rigshank | Next.js dashboard + phone alerts |
+| `to-P1` | Ishan, second session (since 3:15) | Next.js dashboard, cut-down (Krish unresponsive) |
 
 ## Timeline
 | Time | You | Lead agent (this session) |

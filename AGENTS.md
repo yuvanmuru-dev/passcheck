@@ -12,7 +12,7 @@ You are one of **three coding agents** (P1 Ishan, P2 saikarthikbattula, P3 rigsh
 |---|---|
 | P1 Backend + Dispute agent (Ish0212) | `backend/` (incl. `backend/agents/llm/` **except** `describer.py` and `root_cause.py`), `scripts/` |
 | P2 Capture & Vision (saikarthikbattula) | `capture/`, `backend/agents/llm/describer.py`, `demo/photos/` |
-| P3 Frontend (rigshank) | `frontend/` |
+| P3 Frontend (**reassigned to Ish0212 at 3:15**, built in a second agent session; rigshank must not push to `frontend/` without asking the lead) | `frontend/` |
 | Lead / manager + builder (yuvanmuru-dev) | `backend/agents/llm/root_cause.py` (A5), `demo/seed/`, `pitch/`, and the shared files below |
 | Shared (ask first) | `contracts/`, `PLAN.md`, `AGENTS.md`, root `README.md`, root `.gitignore` |
 
