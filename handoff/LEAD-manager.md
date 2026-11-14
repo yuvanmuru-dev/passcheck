@@ -9,13 +9,13 @@ You build the **Root-Cause agent (A5)**, which is the "Why?" moment of the demo,
 | Label | Person | Role |
 |---|---|---|
 | `to-P1` | Ishan (Ish0212) | Backend + Dispute agent (heaviest) |
-| `to-P2` | rigshank | Capture service + Evidence Describer + tray photos |
-| `to-P3` | saikarthikbattula | Next.js dashboard + phone alerts |
+| `to-P2` | saikarthikbattula | Capture service + Evidence Describer + tray photos |
+| `to-P3` | rigshank | Next.js dashboard + phone alerts |
 
 ## Timeline
 | Time | You | Lead agent (this session) |
 |---|---|---|
-| Before 2:00 | Make sure all 3 accepted the invite, cloned, ran `gh auth login`. Share the OpenAI key by DM. Confirm rigshank has the food. | — |
+| Before 2:00 | Make sure all 3 accepted the invite, cloned, ran `gh auth login`. Share the OpenAI key by DM. Confirm saikarthikbattula has the food. | — |
 | **2:00** | Tell everyone to paste their brief's prompt. | Start the Q&A `/loop`. Push the `run_root_cause` stub (contract §5) by 2:15. |
 | 2:00–2:15 | Watch for the 2:15 stubs (P1 health + LLM stubs, P2 describer stub, P3 app shell). | Answer questions. |
 | 2:15–3:15 | Build order: **seed `week.json` (by 2:45, since Ishan's fixtures depend on it) → A5 Root-Cause → pitch drafts.** Check on people every ~20 min. | Answer questions between build steps; every ~15 min `git pull` and review new commits against the contract; send `to-P#` feedback for mismatches (field names, auth, event names). |
@@ -29,7 +29,7 @@ Shape: contract §6. Story: PLAN §3.
 - Nov 10–14, ~120 orders, 11:00–14:00 and 17:00–20:00 CT, ≈ 40% delivery, Stations 1–3; Station 2 runs ~2.3× its average volume 12:00–13:00.
 - Tickets 100–219. **Fixed demo tickets:** `#139` (DoorDash, Station 2, 12:13, `fries_in_bag.jpg` → DISPUTE) · `#131` (Uber Eats, Station 2, 12:40, `no_fries_in_bag.jpg` → ACCEPT) · `#142` (status `new`, no evidence, for the live bump).
 - 7 charges: 4 × fries Station 2 12:00–13:00 (2 with fries visible, 2 without), 1 missing drink with no evidence, 1 wrong item Station 1, 1 cold food on an order with a 6-min ready→handoff gap. Red herring: a Station 1 charge at 11:40.
-- Descriptions pre-filled (no API calls at seed time). Swap in rigshank's real describer outputs when he posts them.
+- Descriptions pre-filled (no API calls at seed time). Swap in saikarthikbattula's real describer outputs when they're posted.
 - Generator: `demo/seed/generate.py` with a fixed random seed, so it's re-runnable.
 
 ## Your build: A5 Root-Cause agent (`backend/agents/llm/root_cause.py`)

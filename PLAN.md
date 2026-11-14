@@ -164,8 +164,8 @@ Agent briefs: **[handoff/](handoff/)**. Shared rules for every agent: **[AGENTS.
 | Person | Owns (directory) | Brief |
 |---|---|---|
 | **P1 Ishan (Ish0212): Backend + Dispute agent** (heaviest; Claude Ultra / high reasoning) | `backend/` incl. `agents/llm/` except `describer.py` + `root_cause.py`, `scripts/` | [handoff/P1-backend.md](handoff/P1-backend.md) |
-| **P2 rigshank: Capture & Vision** | `capture/`, `backend/agents/llm/describer.py`, `demo/photos/` | [handoff/P2-capture-vision.md](handoff/P2-capture-vision.md) |
-| **P3 saikarthikbattula: Frontend** | `frontend/` | [handoff/P3-frontend.md](handoff/P3-frontend.md) |
+| **P2 saikarthikbattula: Capture & Vision** | `capture/`, `backend/agents/llm/describer.py`, `demo/photos/` | [handoff/P2-capture-vision.md](handoff/P2-capture-vision.md) |
+| **P3 rigshank: Frontend** | `frontend/` | [handoff/P3-frontend.md](handoff/P3-frontend.md) |
 | **Lead Yuvan (yuvanmuru-dev): manager + builder** | `backend/agents/llm/root_cause.py` (A5 Root-Cause agent), `demo/seed/`, `pitch/`, contract + shared docs; runs the lead agent (Q&A, commit reviews, integration testing); drives the demo | [handoff/LEAD-manager.md](handoff/LEAD-manager.md) |
 
 | Time | Milestone |

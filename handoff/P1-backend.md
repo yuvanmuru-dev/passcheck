@@ -8,7 +8,7 @@
 ## You own
 - `backend/`, **including** `backend/agents/llm/dispute.py`, `common.py`, `fixtures/`, `requirements.txt`
 - `scripts/`
-- **Not yours:** `backend/agents/llm/describer.py` (P2 rigshank), `backend/agents/llm/root_cause.py` (lead), `demo/seed/` and `pitch/` (lead).
+- **Not yours:** `backend/agents/llm/describer.py` (P2 saikarthikbattula), `backend/agents/llm/root_cause.py` (lead), `demo/seed/` and `pitch/` (lead).
 
 ## Target layout
 ```

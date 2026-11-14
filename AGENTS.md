@@ -1,6 +1,6 @@
 # AGENTS.md: rules for every coding agent on PassCheck
 
-You are one of **three coding agents** (P1 Ishan, P2 rigshank, P3 saikarthikbattula), each working for a different teammate, coordinated by a **lead agent** run by the team manager (Yuvan), in the same repo, at the same time, for a **3-hour hackathon** (2:00–5:00 PM CST, Nov 14, 2026). Speed and not breaking each other matter more than perfection.
+You are one of **three coding agents** (P1 Ishan, P2 saikarthikbattula, P3 rigshank), each working for a different teammate, coordinated by a **lead agent** run by the team manager (Yuvan), in the same repo, at the same time, for a **3-hour hackathon** (2:00–5:00 PM CST, Nov 14, 2026). Speed and not breaking each other matter more than perfection.
 
 ## Read first
 1. `PLAN.md`: what we're building and why (product, agents, security, UI).
@@ -11,8 +11,8 @@ You are one of **three coding agents** (P1 Ishan, P2 rigshank, P3 saikarthikbatt
 | Owner | Paths |
 |---|---|
 | P1 Backend + Dispute agent (Ish0212) | `backend/` (incl. `backend/agents/llm/` **except** `describer.py` and `root_cause.py`), `scripts/` |
-| P2 Capture & Vision (rigshank) | `capture/`, `backend/agents/llm/describer.py`, `demo/photos/` |
-| P3 Frontend (saikarthikbattula) | `frontend/` |
+| P2 Capture & Vision (saikarthikbattula) | `capture/`, `backend/agents/llm/describer.py`, `demo/photos/` |
+| P3 Frontend (rigshank) | `frontend/` |
 | Lead / manager + builder (yuvanmuru-dev) | `backend/agents/llm/root_cause.py` (A5), `demo/seed/`, `pitch/`, and the shared files below |
 | Shared (ask first) | `contracts/`, `PLAN.md`, `AGENTS.md`, root `README.md`, root `.gitignore` |
 
